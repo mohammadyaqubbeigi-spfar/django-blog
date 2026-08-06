@@ -10,13 +10,28 @@ Home
 
 {% for post in page_obj %}
 
-    <h3>
-        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
-    </h3>
+<h3>
+    <a href="{% url 'post_detail' post.id %}?page={{ page_obj.number }}">{{ post.title }}</a>
+</h3>
 
-    <h5>{{ post.content }}</h5>
+<h5>{{ post.content }}</h5>
 
-    <hr>
+<hr>
 {% endfor %}
+
+<div>
+    {% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
+
+<span>
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+</span>
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">Next</a>
+{% endif %}
+
+</div>
 
 {% endblock %}

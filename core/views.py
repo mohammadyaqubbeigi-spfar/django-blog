@@ -17,7 +17,10 @@ def home (request) :
 def post_detail(request ,  post_id):
     post = get_object_or_404(Post , id = post_id)
 
+    page = request.GET.get("page")
+
     context ={
-        "post":post
+        "post":post,
+        "page":page,
     }
     return render(request , 'core/post_detail.html', context)
