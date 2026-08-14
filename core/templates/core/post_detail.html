@@ -9,7 +9,7 @@
 <p>{{ post.content }}</p>
 
 {% if page %}
-<a href="{% url 'home' %}?page={{ page }}">back</a>
+<a href="{% url 'home' %}?{% if query %}q={{ query }}&{% endif %}page={{ page }}">back</a>
 {% else %}
 <a href="{% url 'home' %}">back</a>
 {% endif %}

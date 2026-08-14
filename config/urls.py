@@ -22,5 +22,5 @@ from core.views import home , post_detail
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home , name="home"),
-    path('posts/<int:post_id>/' , post_detail , name= "post_detail"),
+    path('posts/<slug:slug>/' , post_detail , name= "post_detail"),
 ]
