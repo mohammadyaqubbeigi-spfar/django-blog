@@ -13,7 +13,16 @@ Home
         value="{{ query|default:'' }}"
         placeholder="Search posts..."
     >
-    <button type="submit">Search</button>
+    <select name="sort">
+        <option value="newest" {% if sort == "newest"%}selected{% endif %}>
+            Newest</option>
+        <option value="oldest" {% if sort == "oldest"%}selected{% endif %}>
+            Oldest</option>
+        <option value="title" {% if sort == "title"%}selected{% endif %}>
+            Title</option>
+    </select>
+
+    <button type="submit">َApply</button>
 </form>
 
 <h2>Posts list</h2>
@@ -31,7 +40,7 @@ Home
 
 <div>
     {% if page_obj.has_previous %}
-<a href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+<a href="?{{ previous_query }}">Previous</a>
 {% endif %}
 
 <span>
@@ -39,7 +48,7 @@ Home
 </span>
 
 {% if page_obj.has_next %}
-<a href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+<a href="?{{ next_query }}">Next</a>
 {% endif %}
 
 </div>
