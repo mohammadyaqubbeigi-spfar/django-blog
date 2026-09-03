@@ -1,7 +1,9 @@
-from django.shortcuts import render , get_object_or_404
+from django.shortcuts import render , redirect ,get_object_or_404
 from .models import Post
+from .forms import PostForm
 from django.core.paginator import Paginator
 from django.db.models import Q
+
 
 def home (request) :
 
@@ -68,3 +70,29 @@ def post_detail(request , slug):
         "query":query,
     }
     return render(request , 'core/post_detail.html', context)
+
+def post_create(request):
+
+    if request.method == "POST":
+        
+        form = PostForm(request.POST)
+        print("Raw POST:", request.POST)
+
+
+        if form.is_valid():
+            post = form.save()
+            print("Cleaned data:", form.cleaned_data)
+            return redirect("post_detail" , slug = post.slug)
+
+    else:
+        print("GET REQUQST")
+        form = PostForm()
+
+    return render(
+        request ,
+        'core/post_create.html',
+
+        {
+            "form":form
+        }
+    )
