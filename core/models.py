@@ -31,4 +31,4 @@ class Post(models.Model):
 
             self.slug = slug
 
-            super().save(*args , **kwargs)
+        super().save(*args , **kwargs)

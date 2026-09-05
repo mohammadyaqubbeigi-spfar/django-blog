@@ -96,3 +96,40 @@ def post_create(request):
             "form":form
         }
     )
+
+def post_edit(request , slug):
+    post = get_object_or_404(Post , slug = slug)
+    print("Database title:", post.title)
+    print("Database content:", post.content)
+
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        print("Form valid:", form.is_valid())
+
+        if form.is_valid():
+            saved_post = form.save()
+
+            print("Form title:", form.cleaned_data["title"])
+            print("Saved object title:", saved_post.title)
+            print("Saved object ID:", saved_post.id)
+
+
+            saved_post.refresh_from_db()
+
+            print("Database title:", saved_post.title)
+            print("Database ID:", saved_post.id)
+
+
+
+            return redirect("post_detail" , slug = post.slug)
+        else:
+            print("Form errors:", form.errors)
+    else:
+        form = PostForm(instance=post)
+
+    context={
+        "form": form,
+        "post": post,
+    }
+
+    return render (request , "core/post_edit.html", context)
