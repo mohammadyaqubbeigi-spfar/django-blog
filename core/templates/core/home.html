@@ -6,6 +6,12 @@ Home
 
 {% block content %}
 
+<div>
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+    {% endif %}
+</div>
+
 <form method="get">
     <input
         type="text"

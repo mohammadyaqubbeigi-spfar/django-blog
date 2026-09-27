@@ -1,15 +1,17 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 
 class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts",null= True, blank= True)
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True , blank=True , null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Mets:
+    class Meta:
         ordering = ["-created_at","title"]
 
     @admin.display(description="Word count")
