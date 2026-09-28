@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth import authenticate , login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def home (request) :
@@ -85,6 +86,7 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            messages.success(request, "Post created successfully.")
             return redirect("post_detail" , slug = post.slug)
 
     else:
@@ -110,7 +112,10 @@ def post_edit(request , slug):
     
         if form.is_valid():
             
-            saved_post = form.save()
+            form.save()
+
+            messages.success(request, "Post updated successfully.")
+
             return redirect("post_detail" , slug = post.slug)
        
     else:
@@ -132,6 +137,9 @@ def post_delete(request , slug):
 
     if request.method == "POST":
         post.delete()
+
+        messages.success(request, "Post delete successfully.")
+
         return redirect("home")
 
     return render (request, "core/post_delete.html", {"post":post})
